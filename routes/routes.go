@@ -1,15 +1,14 @@
 package routes
 
 import (
-	"context"
 	"go-auth-template/controllers"
 	"go-auth-template/utils"
 	"net/http"
 )
 
-func AddBaseRoutes(ctx context.Context, mux *http.ServeMux, logger *utils.Logger) {
+func AddBaseRoutes(mux *http.ServeMux, logger *utils.Logger) {
 	mux.Handle("/healthz", controllers.HandleHealthZ(logger))
-	mux.Handle("/", controllers.HandleHome(ctx, logger))
+	mux.Handle("/", controllers.HandleHome(logger))
 }
 
 //func AddRoutes(

@@ -1,11 +1,33 @@
 package layout
 
 templ Base() {
+    <!doctype html>
     <html>
         <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Auth base in Go</title>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+        <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
+
         </head>
 
         <body>
+            <style>
+                body {
+                    margin: 0;
+                    font-family: "Noto Sans", sans-serif;
+                    font-optical-sizing: auto;
+                    font-weight: <weight>;
+                    font-style: normal;
+                    font-variation-settings:
+                        "wdth" 100;
+                }
+            </style>
+
             This is the body
             { children... }
         </body>
