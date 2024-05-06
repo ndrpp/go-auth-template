@@ -13,6 +13,8 @@ func AddBaseRoutes(mux *http.ServeMux, logger *utils.Logger) {
 }
 
 func AddAuthRoutes(mux *http.ServeMux, logger *utils.Logger, db *sql.DB) {
-	mux.Handle("GET /auth", controllers.RenderAuthForm(logger))
-	mux.Handle("POST /auth", controllers.Login(logger, db))
+	mux.Handle("GET /login", controllers.RenderAuthForm(logger))
+	mux.Handle("POST /login", controllers.Login(logger, db))
+
+	mux.Handle("GET /register", controllers.RenderAuthForm(logger))
 }

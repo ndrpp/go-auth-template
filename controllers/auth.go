@@ -16,7 +16,13 @@ type User struct {
 func RenderAuthForm(logger *utils.Logger) http.Handler {
 	return http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
-			err := utils.Render(r, w, pages.AuthForm())
+			var action string
+			if r.URL.String() == "/register" {
+				action = "REGISTER"
+			} else {
+				action = "LOGIN"
+			}
+			err := utils.Render(r, w, pages.AuthForm(action))
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return

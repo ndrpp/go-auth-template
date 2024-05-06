@@ -2,22 +2,39 @@ package pages
 
 import "go-auth-template/views/layout"
 
-templ AuthForm() {
+const (
+    loginAction = "LOGIN"
+    registerAction = "REGISTER"
+)
+
+templ Inputs() {
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" required/>
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required />
+}
+
+templ AuthForm(action string) {
     @layout.Base() {
-        <!--
-        <script type="text/javascript">
-            const form = document.querySelector(".login-form");
-            form.addEventListener('submit', (e) => e.preventDefault());
-        </script>
-        -->
-        <form hx-post="/auth" hx-swap="none" class="login-form">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required/>
-
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required />
-
-            <button type="submit">Login</button>
-        </form>
+        <div class="form-card">
+            if action == loginAction {
+                <form hx-post="/login" hx-swap="none" id="login-form">
+                    @Inputs()
+                    <button type="submit">Login</button>
+                </form>
+                <p>
+                    Don't have an account? Register <a href="/register">here</a>
+                </p>
+            } else {
+                <form hx-post="/login" hx-swap="none" id="login-form">
+                    @Inputs()
+                    <button type="submit">Register</button>
+                </form>
+                <p>
+                    Already have an account? Login <a href="/login">here</a>
+                </p>
+            }
+        </div>
     }
 }
