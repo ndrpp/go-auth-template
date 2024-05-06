@@ -17,4 +17,5 @@ func AddAuthRoutes(mux *http.ServeMux, logger *utils.Logger, db *sql.DB) {
 	mux.Handle("POST /login", controllers.Login(logger, db))
 
 	mux.Handle("GET /register", controllers.RenderAuthForm(logger))
+	mux.Handle("POST /register", controllers.Register(logger, db))
 }

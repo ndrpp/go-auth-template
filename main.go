@@ -8,15 +8,21 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
 
 func main() {
 	config := server.NewConfig("localhost", "8081")
 	logger := utils.NewLogger()
+	err := godotenv.Load()
+	if err != nil {
+		logger.Error(err.Error())
+	}
+
 	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	if err != nil {
-		logger.Error("Error connecting to PostgreSQL.")
+		logger.Error(err.Error())
 	}
 
 	s := server.NewServer(config, logger, db)
