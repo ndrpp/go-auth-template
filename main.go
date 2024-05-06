@@ -1,9 +1,9 @@
 package main
 
 import (
-	"database/sql"
 	"go-auth-template/server"
 	"go-auth-template/utils"
+	"log"
 	"os"
 	"os/signal"
 	"syscall"
@@ -13,14 +13,18 @@ import (
 )
 
 func main() {
-	config := server.NewConfig("localhost", "8081")
-	logger := utils.NewLogger()
 	err := godotenv.Load()
 	if err != nil {
-		logger.Error(err.Error())
+		log.Fatal(err.Error())
+	}
+	config := server.NewConfig("localhost", "8081")
+	logger, err := utils.NewLogger()
+	if err != nil {
+		log.Fatal(err.Error())
 	}
 
-	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+	dsn := os.Getenv("DATABASE_URL")
+	db, err := utils.CreateDBClient(logger, dsn)
 	if err != nil {
 		logger.Error(err.Error())
 	}

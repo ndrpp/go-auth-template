@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"log"
 	"os"
 
 	"go.uber.org/zap"
@@ -10,15 +11,21 @@ type Logger struct {
 	Logger *zap.Logger
 }
 
-func NewLogger() *Logger {
+func NewLogger() (*Logger, error) {
 	env := os.Getenv("ENVIRONMENT")
+	var logger *zap.Logger
+	var err error
 	if env == "production" {
-		logger, _ := zap.NewProduction()
-		return &Logger{Logger: logger}
+		logger, err = zap.NewProduction()
+	} else {
+		logger, err = zap.NewDevelopment()
+	}
+	if err != nil {
+		log.Fatal(err.Error())
+		return nil, err
 	}
 
-	logger, _ := zap.NewDevelopment()
-	return &Logger{Logger: logger}
+	return &Logger{Logger: logger}, nil
 }
 
 func (l *Logger) Info(message string) {
