@@ -30,7 +30,7 @@ func Inputs() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<label for=\"username\">Username</label> <input type=\"text\" id=\"username\" name=\"username\" required> <label for=\"password\">Password</label> <input type=\"password\" id=\"password\" name=\"password\" required>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<fieldset class=\"flex flex-col\"><label for=\"username\">Username</label> <input type=\"text\" id=\"username\" name=\"username\" required></fieldset><fieldset class=\"flex flex-col\"><label for=\"password\">Password</label> <input type=\"password\" id=\"password\" name=\"password\" required></fieldset>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -60,12 +60,12 @@ func AuthForm(action string) templ.Component {
 				templ_7745c5c3_Buffer = templ.GetBuffer()
 				defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"form-card\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<style>\n            .form-card {\n                max-width: 360px;\n                margin-inline: auto;\n                margin-block: 2rem;\n                \n                gap: 1rem;\n\n                form {\n                    gap: 1rem;\n\n                    button[type=\"submit\"] {\n                        margin-top: 1rem;\n                    }\n\n                    fieldset {\n                        border: 0;\n                        padding: 0;\n\n                        gap: 0.25rem;\n                    }\n                }\n            }\n\n            .flex {\n                display: flex;\n            }\n            .flex-col {\n                flex-direction: column;\n            }\n\n            @media (min-width: 768px) {\n                .form-card {\n                    margin-top: 10rem;\n                }\n            }\n        </style> <div class=\"form-card flex flex-col\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			if action == loginAction {
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form hx-post=\"/login\" hx-swap=\"none\" id=\"login-form\">")
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form hx-post=\"/login\" hx-swap=\"none\" class=\"flex flex-col\">")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -78,7 +78,7 @@ func AuthForm(action string) templ.Component {
 					return templ_7745c5c3_Err
 				}
 			} else {
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form hx-post=\"/login\" hx-swap=\"none\" id=\"login-form\">")
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form hx-post=\"/register\" hx-swap=\"none\" class=\"flex flex-col\">")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}

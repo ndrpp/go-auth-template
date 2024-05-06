@@ -8,18 +8,59 @@ const (
 )
 
 templ Inputs() {
-    <label for="username">Username</label>
-    <input type="text" id="username" name="username" required/>
+    <fieldset class="flex flex-col">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required/>
+    </fieldset>
 
-    <label for="password">Password</label>
-    <input type="password" id="password" name="password" required />
+    <fieldset class="flex flex-col">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required />
+    </fieldset>
 }
 
 templ AuthForm(action string) {
     @layout.Base() {
-        <div class="form-card">
+        <style>
+            .form-card {
+                max-width: 360px;
+                margin-inline: auto;
+                margin-block: 2rem;
+                
+                gap: 1rem;
+
+                form {
+                    gap: 1rem;
+
+                    button[type="submit"] {
+                        margin-top: 1rem;
+                    }
+
+                    fieldset {
+                        border: 0;
+                        padding: 0;
+
+                        gap: 0.25rem;
+                    }
+                }
+            }
+
+            .flex {
+                display: flex;
+            }
+            .flex-col {
+                flex-direction: column;
+            }
+
+            @media (min-width: 768px) {
+                .form-card {
+                    margin-top: 10rem;
+                }
+            }
+        </style>
+        <div class="form-card flex flex-col">
             if action == loginAction {
-                <form hx-post="/login" hx-swap="none" id="login-form">
+                <form hx-post="/login" hx-swap="none" class="flex flex-col">
                     @Inputs()
                     <button type="submit">Login</button>
                 </form>
@@ -27,7 +68,7 @@ templ AuthForm(action string) {
                     Don't have an account? Register <a href="/register">here</a>
                 </p>
             } else {
-                <form hx-post="/login" hx-swap="none" id="login-form">
+                <form hx-post="/register" hx-swap="none" class="flex flex-col">
                     @Inputs()
                     <button type="submit">Register</button>
                 </form>
