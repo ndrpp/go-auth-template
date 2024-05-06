@@ -1,0 +1,23 @@
+package pages
+
+import "go-auth-template/views/layout"
+
+templ AuthForm() {
+    @layout.Base() {
+        <!--
+        <script type="text/javascript">
+            const form = document.querySelector(".login-form");
+            form.addEventListener('submit', (e) => e.preventDefault());
+        </script>
+        -->
+        <form hx-post="/auth" hx-swap="none" class="login-form">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required/>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required />
+
+            <button type="submit">Login</button>
+        </form>
+    }
+}

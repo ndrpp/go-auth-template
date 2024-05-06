@@ -1,6 +1,7 @@
 package server
 
 import (
+	"database/sql"
 	"fmt"
 	"go-auth-template/middleware"
 	"go-auth-template/routes"
@@ -21,9 +22,10 @@ func NewConfig(host, port string) *Config {
 	}
 }
 
-func NewServer(config *Config, logger *utils.Logger) *http.Server {
+func NewServer(config *Config, logger *utils.Logger, db *sql.DB) *http.Server {
 	mux := http.NewServeMux()
 	routes.AddBaseRoutes(mux, logger)
+	routes.AddAuthRoutes(mux, logger, db)
 	var handler http.Handler = mux
 	handler = middleware.CorsMiddeware(handler)
 
