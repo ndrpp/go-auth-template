@@ -30,10 +30,11 @@ func NewServer(config *Config, logger *utils.Logger, db *sql.DB) *http.Server {
 	handler = middleware.CorsMiddeware(handler)
 
 	return &http.Server{
-		Addr:         fmt.Sprintf("%s:%s", config.Host, config.Port),
-		Handler:      handler,
-		WriteTimeout: time.Hour,
-		ReadTimeout:  time.Hour,
+		Addr:              fmt.Sprintf("%s:%s", config.Host, config.Port),
+		Handler:           http.TimeoutHandler(handler, time.Second, "Timeout"),
+		ReadTimeout:       500 * time.Millisecond,
+		ReadHeaderTimeout: 500 * time.Millisecond,
+		IdleTimeout:       time.Second,
 	}
 }
 

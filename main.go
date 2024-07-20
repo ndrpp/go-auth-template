@@ -30,9 +30,12 @@ func main() {
 	}
 
 	s := server.NewServer(config, logger, db)
-	server.Listen(s, logger)
+	err = server.Listen(s, logger)
+	if err != nil {
+		logger.Error(err.Error())
+	}
 
-	quit := make(chan os.Signal)
+	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, os.Interrupt, syscall.SIGTERM)
 	<-quit
 }

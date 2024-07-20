@@ -36,7 +36,12 @@ func Login(logger *utils.Logger, db *sql.DB) http.Handler {
 	return http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
 
-			r.ParseForm()
+			err := r.ParseForm()
+			if err != nil {
+				logger.Error(err.Error())
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
 			//TODO
 			//perform some validation on the data
 			user := &User{
@@ -57,7 +62,12 @@ func Login(logger *utils.Logger, db *sql.DB) http.Handler {
 func Register(logger *utils.Logger, db *sql.DB) http.Handler {
 	return http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
-			r.ParseForm()
+			err := r.ParseForm()
+			if err != nil {
+				logger.Error(err.Error())
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
 			//TODO
 			//perform some validation on the data
 			//then hash the received password
@@ -66,7 +76,7 @@ func Register(logger *utils.Logger, db *sql.DB) http.Handler {
 				Password: r.FormValue("password"),
 			}
 
-			_, err := db.Exec("INSERT INTO users (user_id, username, password) VALUES ($1, $2, $3)", uuid.NewString(), new_user.Username, new_user.Password)
+			_, err = db.Exec("INSERT INTO users (user_id, username, password) VALUES ($1, $2, $3)", uuid.NewString(), new_user.Username, new_user.Password)
 			if err != nil {
 				logger.Error(err.Error())
 				http.Error(w, err.Error(), http.StatusInternalServerError)
